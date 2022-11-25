@@ -11,6 +11,7 @@ import (
 
 	"github.com/Songmu/gitconfig"
 	"github.com/saracen/walker"
+
 	"github.com/x-motemen/ghq/logger"
 )
 
@@ -218,6 +219,7 @@ var vcsContentsMap = map[string]*VCSBackend{
 	".fslckout":      FossilBackend, // file
 	"_FOSSIL_":       FossilBackend, // file
 	"CVS/Repository": cvsDummyBackend,
+	".sl":            SaplingBackend,
 }
 
 var vcsContents = [...]string{
@@ -230,6 +232,7 @@ var vcsContents = [...]string{
 	".fslckout",
 	"._FOSSIL_",
 	"CVS/Repository",
+	".sl",
 }
 
 func findVCSBackend(fpath, vcs string) *VCSBackend {

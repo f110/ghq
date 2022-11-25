@@ -393,6 +393,19 @@ var BazaarBackend = &VCSBackend{
 	Contents: []string{".bzr"},
 }
 
+// SaplingBackend is the VCSBackend for sapling
+var SaplingBackend = &VCSBackend{
+	Clone: func(vg *vcsGetOption) error {
+		dir, _ := filepath.Split(vg.dir)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return err
+		}
+
+		return runInDir(vg.silent)(dir, "sl", "clone", vg.url.String())
+	},
+	Contents: []string{".sl"},
+}
+
 var vcsRegistry = map[string]*VCSBackend{
 	"git":        GitBackend,
 	"github":     GitBackend,
@@ -407,4 +420,5 @@ var vcsRegistry = map[string]*VCSBackend{
 	"fossil":     FossilBackend,
 	"bzr":        BazaarBackend,
 	"bazaar":     BazaarBackend,
+	"sl":         SaplingBackend,
 }
