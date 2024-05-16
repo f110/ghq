@@ -220,6 +220,7 @@ var vcsContentsMap = map[string]*VCSBackend{
 	"_FOSSIL_":       FossilBackend, // file
 	"CVS/Repository": cvsDummyBackend,
 	".sl":            SaplingBackend,
+	".jj":            JujutsuBackend,
 }
 
 var vcsContents = [...]string{
@@ -233,6 +234,7 @@ var vcsContents = [...]string{
 	"._FOSSIL_",
 	"CVS/Repository",
 	".sl",
+	".jj",
 }
 
 func findVCSBackend(fpath, vcs string) *VCSBackend {

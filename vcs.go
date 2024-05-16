@@ -406,6 +406,20 @@ var SaplingBackend = &VCSBackend{
 	Contents: []string{".sl"},
 }
 
+// JujutsuBackend is the VCSBackend for jujutsu
+var JujutsuBackend = &VCSBackend{
+	Clone: func(vg *vcsGetOption) error {
+		return run(vg.silent)("jj", "git", "clone", "--colocate", vg.url.String(), vg.dir)
+	},
+	Update: func(vg *vcsGetOption) error {
+		return runInDir(vg.silent)(vg.dir, "jj", "git", "fetch")
+	},
+	Init: func(dir string) error {
+		return cmdutil.RunInDir(dir, "jj", "init")
+	},
+	Contents: []string{".jj"},
+}
+
 var vcsRegistry = map[string]*VCSBackend{
 	"git":        GitBackend,
 	"github":     GitBackend,
@@ -421,4 +435,5 @@ var vcsRegistry = map[string]*VCSBackend{
 	"bzr":        BazaarBackend,
 	"bazaar":     BazaarBackend,
 	"sl":         SaplingBackend,
+	"jj":         JujutsuBackend,
 }
